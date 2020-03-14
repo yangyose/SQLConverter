@@ -1,7 +1,7 @@
 
 class SQLParser(object):
 
-    def _init_(self, sql_engine = 'oracle', sql_tokens = []):
+    def __init__(self, sql_engine = 'oracle', sql_tokens = []):
         self.__engine = sql_engine
         self.__tokens = sql_tokens
 
@@ -14,10 +14,15 @@ class SQLParser(object):
     @property
     def tokens(self):
         return self.__tokens
-    @stream.setter
+    @tokens.setter
     def tokens(self, value):
         self.__tokens = value
 
     def parse(self):
-        return None
+    	vt_indexes = self.__pre_process()
+    	
+    	return vt_indexes
+
+    def __pre_process(self):
+    	return [i for i, element in enumerate(self.__tokens) if element.ttype not in ('Comment', 'Prompt', 'Whitespace')]
         
